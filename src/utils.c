@@ -28,6 +28,9 @@ int create_matrix(char** arr, char*** matrix){ // split_array (0, 4); // split_a
     return 0;
 }
 
+
+
+
 void printArray(char** arr, int size){
     for(int i = 0; i < size; ++i){
         printf("%s\n", arr[i]);
