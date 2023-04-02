@@ -28,7 +28,46 @@ int create_matrix(char** arr, char*** matrix){ // split_array (0, 4); // split_a
     return 0;
 }
 
+int pipe_helper(int argc, char* argv[]){
 
+    int pipefd[2]; 
+    pid_t cpid;
+    char* buf;
+
+    if(argc != 2){
+        fprintf(stderr, "usage: <string>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    if(pipe(pipefd == -1)){
+        perror("PIPE");
+        exit(EXIT_FAILURE);
+    }
+
+    cpid = fork();
+    if(cpid == -1){
+        perror("fork");
+        exit(EXIT_FAILURE);   
+    }
+
+    if(cpid == 0){
+        close(pipefd[1]);
+        while(read(pipefd[0], &buf, 1) > 0){
+            write(STDOUT_FILENO, &buf, 1){
+                write(STDOUT_FILENO, "\n", 1);
+                close(pipefd[0]);
+                _Exit(EXIT_SUCCESS);
+            }
+        }
+    } else {
+        close(pipefd[0]);
+        write(pipefd[1], argv[1], strlen(argv[1]));
+        close(pipefd[1]);
+        write(NULL);
+        exit(EXIT_SUCCESS);
+    }
+    return 0; 
+}
 
 
 void printArray(char** arr, int size){
