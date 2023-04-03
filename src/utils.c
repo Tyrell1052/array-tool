@@ -1,6 +1,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include "utils.h"
 
 
 char** sub_array(char** arr, int start, int end){   
@@ -53,17 +57,17 @@ int pipe_helper(int argc, char* argv[]){
     if(cpid == 0){
         close(pipefd[1]);
         while(read(pipefd[0], &buf, 1) > 0){
-            write(STDOUT_FILENO, &buf, 1){
+            write(STDOUT_FILENO, &buf, 1);
                 write(STDOUT_FILENO, "\n", 1);
                 close(pipefd[0]);
                 _Exit(EXIT_SUCCESS);
-            }
+            
         }
     } else {
         close(pipefd[0]);
         write(pipefd[1], argv[1], strlen(argv[1]));
         close(pipefd[1]);
-        write(NULL);
+        wait(NULL);
         exit(EXIT_SUCCESS);
     }
     return 0; 
