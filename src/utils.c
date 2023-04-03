@@ -61,7 +61,7 @@ int pipe_helper(int argc, char* argv[]){
                 write(STDOUT_FILENO, "\n", 1);
                 close(pipefd[0]);
                 _Exit(EXIT_SUCCESS);
-            
+        
         }
     } else {
         close(pipefd[0]);
